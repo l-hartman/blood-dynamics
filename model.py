@@ -1,8 +1,5 @@
-import random
 import math
 
-
-random.seed(111)
 
 class Model(object):
     """
@@ -14,13 +11,13 @@ class Model(object):
             d is a function that measures the number of cells destroyed in one time unit;
     """
 
-
-    def __init__(self):
+    def __init__(self, a, b, r, s):
         # destruction coefficient, # between 0 and 1
-        self.a = random.uniform(0, 1)
-        self.b = 2
-        self.r = 3
-        self.s = 4
+        self.a = a
+        self.b = b
+        self.r = r 
+        self.s = s 
+        # control parameter, element of R4
         self.a_bar = (self.a, self.b, self.r, self.s)
 
     def p(self, x_n):
@@ -34,10 +31,17 @@ class Model(object):
     def f(self, x):
         return (1 - self.a) * x + self.p(x)
 
+    def plot(self, x_range, y_range, filename=None):
+        pass
+
 
 def main():
-    pass
-
+    # model analysis
+    m = Model(0.2, 4, 6, 2)
+    # create plot on the region [0,10] x [0,10]
+    m.plot((0, 10), (0, 10), filename="model_analysis1.png")
+    # create plot on the region [0,1] x [0,1]
+    m.plot((0, 1), (0, 1), filename="model_analysis2.png")
 
 if __name__ == "__main__":
     main()
