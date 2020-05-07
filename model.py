@@ -1,4 +1,10 @@
 import math
+import numpy as np
+import matplotlib
+matplotlib.use("TkAgg")
+import matplotlib.pyplot as plt
+import seaborn
+seaborn.set(style="ticks")
 
 
 class Model(object):
@@ -31,17 +37,27 @@ class Model(object):
     def f(self, x):
         return (1 - self.a) * x + self.p(x)
 
-    def plot(self, x_range, y_range, filename=None):
-        pass
+def plot(m, x_range, y_range, filename=None):
+    func = m.f
+    fig, ax = plt.subplots()
+    xs = np.linspace(x_range[0], x_range[1], 1000)
+
+    ax.plot(xs, xs, c="#764439")
+    ax.plot(xs, func(xs), c="#ff2768") 
+
+    ax.set_aspect("equal")
+    ax.grid(True, which="both")
+    seaborn.despine(ax=ax, offset=0)
+    plt.show()
 
 
 def main():
     # model analysis
     m = Model(0.2, 4, 6, 2)
     # create plot on the region [0,10] x [0,10]
-    m.plot((0, 10), (0, 10), filename="model_analysis1.png")
+    plot(m, (0, 10), (0, 10), filename="model_analysis1.png")
     # create plot on the region [0,1] x [0,1]
-    m.plot((0, 1), (0, 1), filename="model_analysis2.png")
+    plot(m, (0, 1), (0, 1), filename="model_analysis2.png")
 
 if __name__ == "__main__":
     main()
