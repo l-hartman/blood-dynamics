@@ -49,7 +49,7 @@ def plot(m, x_range, y_range, filename=None):
     ax.grid(True, which="both")
     seaborn.despine(ax=ax, offset=0)
     plt.show()
-    plt.savefig("figures/" + filename)
+    fig.savefig("figures/" + filename)
 
 
 def main():
