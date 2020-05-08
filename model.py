@@ -48,6 +48,8 @@ def plot(m, x_range, y_range, filename=None):
     ax.set_aspect("equal")
     ax.grid(True, which="both")
     seaborn.despine(ax=ax, offset=0)
+    plt.ylim(y_range[0], y_range[1])
+    plt.xlim(x_range[0], x_range[1])
     plt.show()
     fig.savefig("figures/" + filename)
 
