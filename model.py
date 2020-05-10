@@ -1,7 +1,7 @@
 import math
 import numpy as np
 import matplotlib
-matplotlib.use("TkAgg")
+#matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import seaborn
 seaborn.set(style="ticks")
@@ -42,8 +42,12 @@ def plot(m, x_range, y_range, filename=None):
     fig, ax = plt.subplots()
     xs = np.linspace(x_range[0], x_range[1], 1000)
 
+    #c_xs, c_ys = cobweb(func, 500, 5.0)
+
     ax.plot(xs, xs, c="#764439")
     ax.plot(xs, func(xs), c="#ff2768") 
+    #ax.plot(c_xs, c_ys, c="#2727d8")
+
 
     ax.set_aspect("equal")
     ax.grid(True, which="both")
@@ -51,16 +55,61 @@ def plot(m, x_range, y_range, filename=None):
     plt.ylim(y_range[0], y_range[1])
     plt.xlim(x_range[0], x_range[1])
     plt.show()
-    fig.savefig("figures/" + filename)
 
+#    fig.savefig("figures/" + filename)
+
+def cobweb(mapping, iterations, seed):
+    """generate cobweb diagram points"""
+    xs = np.zeros((iterations+1, 2))
+    ys = np.zeros((iterations+1, 2))
+
+    # start at (x=seed, y=0)
+    xs[0] = seed
+    ys[0] = 0
+
+    i = 1
+    while i < iterations:
+        old_x = xs[i-1]
+
+        # get next point on map
+        xs[i] = old_x
+        ys[i] = mapping(old_x)
+
+        # get next y=x point
+        xs[i+1] = ys[i]
+        ys[i+1] = ys[i]
+        i += 2
+
+    return xs, ys
 
 def main():
+    """
     # model analysis
     m = Model(0.2, 4, 6, 2)
     # create plot on the region [0,10] x [0,10]
     plot(m, (0, 10), (0, 10), filename="model_analysis1.png")
     # create plot on the region [0,1] x [0,1]
     plot(m, (0, 1), (0, 1), filename="model_analysis2.png")
+    m = Model(0.0, 4, 6, 2)
+    # create plot on the region [0,10] x [0,10]
+    plot(m, (0, 10), (0, 10), filename="model_analysis1.png")
+    """
+    alst = np.linspace(0.95, 1.0, 5)
+    for a in alst:
+        m = Model(a, 4, 6, 2)
+        print("a=", a)
+        plot(m, (0, 10), (0, 10), filename="model_analysis1.png")
+        
+    """
+    m = Model(0.9, 4, 6, 2)
+    # create plot on the region [0,10] x [0,10]
+    plot(m, (0, 10), (0, 10), filename="model_analysis1.png")
+
+    m = Model(0.9, 4, 6, 2)
+    # create plot on the region [0,10] x [0,10]
+    plot(m, (0, 10), (0, 10), filename="model_analysis1.png")
+    """
+
 
 if __name__ == "__main__":
     main()
